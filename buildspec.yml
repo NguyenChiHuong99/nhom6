@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  build:
+    commands:
+      - echo "Building Docker image..."
+      - docker build -t my-web-app .
+  post_build:
+    commands:
+      - echo "Pushing Docker image to ECR..."
+      # Tag Docker image với ECR repository
+      - docker tag my-web-app:latest 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-web-app-repo:latest
+      # Đăng nhập vào ECR
+      - $(aws ecr get-login --no-include-email --region us-east-1)
+      # Đẩy Docker image lên ECR
+      - docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-web-app-repo:latest
+
+artifacts:
+  files:
+    - imagedefinitions.json
+    
+#AWS Account ID: 123456789012
+#Region: us-east-1
+#ECR repository name: my-web-app-repo
