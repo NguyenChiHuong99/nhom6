@@ -7,16 +7,16 @@ phases:
   build:
     commands:
       - echo "Building Docker image..."
-      - docker build -t my-web-app .
+      - docker build -t nhom6 .
   post_build:
     commands:
       - echo "Pushing Docker image to ECR..."
       # Tag Docker image với ECR repository
-      - docker tag my-web-app:latest 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-web-app-repo:latest
+      - docker tag my-web-app:latest 216989105570.dkr.ecr.ap-southeast-1.amazonaws.com/nhom6:latest
       # Đăng nhập vào ECR
-      - $(aws ecr get-login --no-include-email --region us-east-1)
+      - $(aws ecr get-login --no-include-email --region ap-southeast-1)
       # Đẩy Docker image lên ECR
-      - docker push 123456789012.dkr.ecr.us-east-1.amazonaws.com/my-web-app-repo:latest
+      - docker push 216989105570.dkr.ecr.ap-southeast-1.amazonaws.com/:latest
 
 artifacts:
   files:
